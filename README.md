@@ -1,5 +1,7 @@
 # CS412 Algorithms: Design and Analysis
-Final Project : <Insert Project Name Here>
+
+## Final Project : <Insert Project Name Here>
+
 The Damnp Biscotti
 	
 - Use the [code](/code) folder to keep all source code files (.c, .h, .cpp, .py, etc.)
