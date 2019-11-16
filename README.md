@@ -14,5 +14,4 @@ The Damnp Biscotti
 	1. Fatima Nadeem
   	2. Kabir Kumar
 	3. Muhammad Shahrom Ali
-        4. Mazeyar Moeini Feizabadi
-
+	4. Mazeyar Moeini Feizabadi
