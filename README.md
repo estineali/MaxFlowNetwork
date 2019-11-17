@@ -15,7 +15,7 @@ The Damnp Biscotti
 	4. Mazeyar Moeini Feizabadi
 
 ## Algorithms:
-	[ ] 1. Dinic's Algorithm. 
+	1. Dinic's Algorithm. 
 		Pending
 	2. Ford-Fulkerson Algorithm
 		Pending
