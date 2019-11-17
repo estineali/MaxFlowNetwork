@@ -13,3 +13,13 @@ The Damnp Biscotti
   	2. Kabir Kumar
 	3. Muhammad Shahrom Ali
 	4. Mazeyar Moeini Feizabadi
+
+## Algorithms:
+	1. Dinic's Algorithm. 
+		Status: Pending
+	2. Ford-Fulkerson Algorithm
+		Status: Pending
+	3. Edmonds-Karp Algorithm
+		Status: Pending
+	4. Push-Relabel Algorithm
+		Status: Pending
