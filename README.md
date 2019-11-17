@@ -16,10 +16,10 @@ The Damnp Biscotti
 
 ## Algorithms:
 	1. Dinic's Algorithm. 
-		Status: Pending
+		Pending
 	2. Ford-Fulkerson Algorithm
-		Status: Pending
+		Pending
 	3. Edmonds-Karp Algorithm
-		Status: Pending
+		Pending
 	4. Push-Relabel Algorithm
-		Status: Pending
+		Pending
