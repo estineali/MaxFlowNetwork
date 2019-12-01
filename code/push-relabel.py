@@ -7,6 +7,7 @@ Created on Sat Nov 30 11:14:41 2019
 """
 
 import math
+from GraphGeneration import GenerateGraph
 
 capacity = [[0 for i in range(6)] for j in range(6)]
 
@@ -21,7 +22,7 @@ capacity[3][2] = 9
 capacity[4][3] = 7
 capacity[4][5] = 4
 
-
+capacity = GenerateGraph(6)
 
 def residual(C,F):
     return C-F
