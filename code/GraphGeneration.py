@@ -1,7 +1,7 @@
 import random
 
 def GenerateGraph(lengthG):
-    #Generate adjacency matrix of size lengthG x lengthG 
+    #Generate adjacency (Capacity) matrix of order lengthG
     random.seed(100)
     G = [[0 for i in range(lengthG)] for j in range(lengthG)]
     for i in range(lengthG):
@@ -10,6 +10,18 @@ def GenerateGraph(lengthG):
             if capacity > 0 and j != i:
                 G[i][j] = capacity
     return G
+
+def GenerateNeighbourMatrix(G):
+    E = list()
+    for i in G:
+        neighbours = []
+        for j in range(len(i)):
+            if i[j] > 0:
+                neighbours.append(j)
+        E.append(neighbours.copy())
+        neighbours.clear()
+    return E
+
 
 def showGraph(G):
     for i in range(len(G)):
@@ -36,6 +48,10 @@ if __name__ == '__main__':
 
     size = 6 
     
-    capacity = GenerateGraph(size)
+    Graph_G = GenerateGraph(size)
     
-    showGraph(capacity)
+    showGraph(Graph_G)
+
+    Neighbours_N = GenerateNeighbourMatrix(Graph_G)
+
+    showGraph(Neighbours_N)
