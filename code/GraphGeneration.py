@@ -15,7 +15,27 @@ def showGraph(G):
     for i in range(len(G)):
         print(i, ":", G[i])
 
-size = 6 #change this 
+def pushToFile(G):
+    file_f = open("graphs.txt", 'a')
 
-capacity = GenerateGraph(size)
-showGraph(capacity)
+    file_f.write("\nBegin Graph\n")
+    
+    for i in range(len(G)):
+        #make each entry a string.
+        #Then merge into 1 comma sep. string
+        s = ", ".join( [str(j) for j in G[i]] )  
+        file_f.write(s + "\n") # write to file. Move cursor to next line 
+
+    file_f.write("End Graph\n")
+    
+    file_f.close()
+
+if __name__ == '__main__':
+    print("Graph Generation Library")
+    print("Test Driver:")
+
+    size = 6 
+    
+    capacity = GenerateGraph(size)
+    
+    showGraph(capacity)
