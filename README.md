@@ -22,4 +22,4 @@ The Damnp Biscotti
 	3. Edmonds-Karp Algorithm
 		Pending
 	4. Push-Relabel Algorithm
-		Pending
+		Commited
