@@ -100,7 +100,7 @@ class Graph:
 G = None
 X = []
 Y = []
-for size in range(2, 100):
+for size in range(2, 1000):
 	X.append(size)
 	G = Graph(size)
 	t0 = t.clock()
