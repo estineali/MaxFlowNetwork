@@ -1,5 +1,6 @@
 import random
 import time as t
+import matplotlib.pyplot as p 
 
 class Graph:
 	__V = None
@@ -96,11 +97,20 @@ class Graph:
 
 		return total
 
-G =  Graph(6) # Graph(V) forms V x V matrix
-t0 = t.clock()
-print(G.DinicMaxFlow(0, 5))  
-t1 = t.clock() 
-print( "Time in milliseconds: ", t1 - t0) # Time for algorithm to run
+G = None
+X = []
+Y = []
+for size in range(2, 100):
+	X.append(size)
+	G = Graph(size)
+	t0 = t.clock()
+	print(G.DinicMaxFlow(0, size - 1))  
+	t1 = t.clock() 
+	Y.append(t1 - t0)
+p.plot(X, Y)
+p.ylabel("Run Time in milliseconds")
+p.xlabel("Adjacency Matrix Size")
+p.show()
 
 
 
