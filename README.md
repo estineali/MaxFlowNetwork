@@ -20,6 +20,6 @@ The Damnp Biscotti
 	2. Ford-Fulkerson Algorithm
 		Pending
 	3. Edmonds-Karp Algorithm
-		Pending
+		Commited
 	4. Push-Relabel Algorithm
 		Commited
