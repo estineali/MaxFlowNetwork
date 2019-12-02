@@ -1,6 +1,6 @@
 import random
 import time as t
-import matplotlib.pyplot as p 
+import matplotlib.pyplot as ba
 
 class Graph:
 	__V = None
@@ -97,25 +97,54 @@ class Graph:
 
 		return total
 
-G = None
-X = []
-Y = []
-for size in range(2, 1000):
-	X.append(size)
-	G = Graph(size)
-	t0 = t.clock()
-	print(G.DinicMaxFlow(0, size - 1))  
-	t1 = t.clock() 
-	Y.append(t1 - t0)
-p.plot(X, Y)
-p.ylabel("Run Time in milliseconds")
-p.xlabel("Adjacency Matrix Size")
-p.show()
+# G =  Graph(6) # Graph(V) forms V x V matrix
+# t0 = t.clock()
+# print(G.DinicMaxFlow(0, 5))  
+# t1 = t.clock() 
+# print( "Time in milliseconds: ", t1 - t0) # Time for algorithm to run
 
 
+# X = []
+# Y = []
+# for size in range(2, 1000):
+# 	X.append(size)
+# 	G = Graph(size)
+# 	t0 = t.clock()
+# 	print(G.DinicMaxFlow(0, size - 1))  
+# 	t1 = t.clock() 
+# 	Y.append(t1 - t0)
+# ba.plot(X, Y)
+# ba.ylabel("Run Time in milliseconds")
+# ba.xlabel("Adjacency Matrix Size")
+# ba.show()
 
+def main():
+	min_sample = 6
+	max_sample = 200
+	x, y = [i for i in range(min_sample, max_sample + 1)], []
+	for node_count in x:
+		source_s = 0
+		dest_d = node_count 
 
+		G =  Graph(node_count) # Graph(V) forms V x V matrix
+		t0 = t.clock()
+		G.DinicMaxFlow(source_s, dest_d - 1)  
+		t1 = t.clock()
+		
+		y.append((t1 - t0)*1000)
 
+	
+	fig = ba.figure()
+	plt = fig.add_subplot(111)
+	plt.set_xlabel('matrix size (nXn)')
+	plt.set_ylabel('time (milliseconds)')
+	plt.plot(x, y, label='Dinic\'s algorithm O(V\N{SUPERSCRIPT TWO}E)')
+	plt.grid(linestyle='-')
+	legend = plt.legend()
+	ba.show()
+
+if __name__ == '__main__':
+	main()
 
 
 

@@ -1,6 +1,6 @@
 import math
 from GraphGeneration import *
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as ba
 import time 
 
 def aug_path_search(Graph_G, Neighb_N, source, dest, Res_R):
@@ -56,25 +56,32 @@ def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
 	return max_flow, trace
 
 def main():
-	min_sample = 10
-	max_sample = 1000
+	min_sample = 1
+	max_sample = 200
 	x, y = [i for i in range(min_sample, max_sample + 1)], []
-	control_graph = [i**2 for i in range(max_sample - min_sample + 1)]
 	for node_count in x:
 		source_s = 0
 		dest_d = node_count 
 
 		Network = GenerateNetwork(node_count)
 		Neighbors_Network = GenerateNeighbourMatrix(Network)
+
 		time_taken = time.time()
+		
 		max_flow, trace  = Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+		
 		time_taken = time.time() - time_taken
-		y.append(time_taken)
+		
+		y.append(time_taken * 1000)
 
-	plt.plot(x, y)
-	plt.plot(control_graph, y)
-
-	plt.show()
+	fig = ba.figure()
+	plt = fig.add_subplot(111)
+	plt.set_xlabel('matrix size (nXn)')
+	plt.set_ylabel('time (milliseconds)')
+	plt.plot(x, y, label='Edmonds-Karp O(VE\N{SUPERSCRIPT TWO})')
+	plt.grid(linestyle='-')
+	legend = plt.legend()
+	ba.show()
 
 if __name__ == '__main__':
 	main()
