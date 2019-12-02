@@ -11,6 +11,18 @@ def GenerateGraph(lengthG):
                 G[i][j] = capacity
     return G
 
+def GenerateNetwork(lengthG):
+    #Generate adjacency (Capacity) matrix of order lengthG with a sink
+    random.seed(100)
+    G = [[0 for i in range(lengthG)] for j in range(lengthG)]
+    for i in range(lengthG):
+        for j in range(len(G[i])):
+            capacity = random.randint(-20, 15)
+            if capacity > 0 and j != i:
+                if G[j][i] == 0:
+                    G[i][j] = capacity
+    return G
+
 def GenerateNeighbourMatrix(G):
     E = list()
     for i in G:
@@ -21,7 +33,6 @@ def GenerateNeighbourMatrix(G):
         E.append(neighbours.copy())
         neighbours.clear()
     return E
-
 
 def showGraph(G):
     for i in range(len(G)):
