@@ -1,5 +1,7 @@
 import random
 import time as t
+import matplotlib.pyplot as plt
+from GraphGeneration import * 
 
 class Graph:
 	__V = None
@@ -25,14 +27,12 @@ class Graph:
 		# 						[0, 0,0,6,0, 10],
 		# 						[0, 0,0,0,0, 0]]
 
+		self.__G = GenerateNetwork(V)
 
-		self.__G = [[0 for i in range(V)] for j in range(V)]
-		for i in range(V):
-			for j in range(V):
-				C = random.randint(-20, 15)
-				if C > 0 and j != i:
-					self.__G[i][j] = C
 
+	def get_graph(self):
+		#Winchester 
+		return self.__G
 
 	def showGraph(self):
 		for v in range(self.__V):
@@ -96,23 +96,56 @@ class Graph:
 
 		return total
 
-G =  Graph(6) # Graph(V) forms V x V matrix
-t0 = t.clock()
-print(G.DinicMaxFlow(0, 5))  
-t1 = t.clock() 
-print( "Time in milliseconds: ", t1 - t0) # Time for algorithm to run
+# G =  Graph(6) # Graph(V) forms V x V matrix
+# t0 = t.clock()
+# print(G.DinicMaxFlow(0, 5))  
+# t1 = t.clock() 
+# print( "Time in milliseconds: ", t1 - t0) # Time for algorithm to run
 
 
+# X = []
+# Y = []
+# for size in range(2, 1000):
+# 	X.append(size)
+# 	G = Graph(size)
+# 	t0 = t.clock()
+# 	print(G.DinicMaxFlow(0, size - 1))  
+# 	t1 = t.clock() 
+# 	Y.append(t1 - t0)
+# plt.plot(X, Y)
+# plt.ylabel("Run Time in milliseconds")
+# plt.xlabel("Adjacency Matrix Size")
+# plt.show()
 
+def main():
 
+	min_sample = 6
+	max_sample = 200
 
+	x, y = [i for i in range(min_sample, max_sample + 1, 5)], []
+	for node_count in x:
+		source_s = 0
+		dest_d = node_count 
 
+		G =  Graph(node_count) # Graph(V) forms V x V matrix
+		t0 = t.clock()
+		G.DinicMaxFlow(source_s, dest_d - 1)  
+		t1 = t.clock()
+		
+		y.append((t1 - t0)*1000)
+	
+	fig = plt.figure()
+	dinics_algo = fig.add_subplot(111)
 
+	dinics_algo.set_xlabel('matrix size (nXn)')
+	dinics_algo.set_ylabel('time (milliseconds)')
+	
+	dinics_algo.plot(x, y, label='Dinic\'s algorithm O(V\N{SUPERSCRIPT TWO}E)')
+	
+	dinics_algo.grid(linestyle='-')
+	legend = dinics_algo.legend()
+	
+	plt.show()
 
-
-
-
-
-
-
-
+if __name__ == '__main__':
+	main()

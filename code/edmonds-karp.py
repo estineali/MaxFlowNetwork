@@ -56,25 +56,37 @@ def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
     return max_flow, trace
 
 def main():
-    min_sample = 10
-    max_sample = 1000
-    x, y = [i for i in range(min_sample, max_sample + 1, 5)], []
-    control_graph = [i**2 for i in range(max_sample - min_sample + 1)]
-    for node_count in x:
-        source_s = 0
-        dest_d = node_count 
 
-        Network = GenerateNetwork(node_count)
-        Neighbors_Network = GenerateNeighbourMatrix(Network)
-        time_taken = time.time()
-        max_flow, trace  = Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
-        time_taken = time.time() - time_taken
-        y.append(time_taken)
+	min_sample = 1
+	max_sample = 300
+	x, y = [i for i in range(min_sample, max_sample + 1, 5)], []
+	for node_count in x:
+		source_s = 0
+		dest_d = node_count 
 
-    plt.plot(x, y)
-    plt.plot(control_graph, y)
+		Network = GenerateNetwork(node_count)
+		Neighbors_Network = GenerateNeighbourMatrix(Network)
 
-    plt.show()
+		time_taken = time.time()
+		
+		max_flow, trace  = Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+		
+		time_taken = time.time() - time_taken
+		
+		y.append(time_taken * 1000)
+
+	fig = plt.figure()
+	E_K_algo = fig.add_subplot(111)
+	
+	E_K_algo.set_xlabel('matrix size (nXn)')
+	E_K_algo.set_ylabel('time (milliseconds)')
+	
+	E_K_algo.plot(x, y, 'o-',color='red', label='Edmonds-Karp O(VE\N{SUPERSCRIPT TWO})')
+	E_K_algo.grid(linestyle='-')
+	
+	legend = E_K_algo.legend()
+	
+	plt.show()
 
 if __name__ == '__main__':
     main()
