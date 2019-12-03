@@ -5,56 +5,56 @@ import time, math
 
 #######EDMONDS KARP
 def aug_path_search(Graph_G, Neighb_N, source, dest, Res_R):
-	#Graph_G is the adjacency matrix containing the capacity
-	#Neighb_N is the adjacency List containing neighbours
-	#Res_R is the Residual Flow 
-	P = [-1 for x in Graph_G]
-	P[source] = -2
+    #Graph_G is the adjacency matrix containing the capacity
+    #Neighb_N is the adjacency List containing neighbours
+    #Res_R is the Residual Flow 
+    P = [-1 for x in Graph_G]
+    P[source] = -2
 
-	M = [0 for x in Graph_G]
-	M[source] = math.inf
-	
-	Qu = [source]
-	Visited = list()
-	
-	while Qu:
-		u = Qu.pop(0)
-		Visited.append(u)
-		for v in Neighb_N[u]:
-			if Graph_G[u][v] > Res_R[u][v]:
-				if P[v] == -1:
-					P[v] = u
-					M[v] = min(M[u], Graph_G[u][v] - Res_R[u][v])
-					if v == dest:
-						return M[dest], P, Visited
-					Qu.append(v)
-	return 0, P ,Visited
+    M = [0 for x in Graph_G]
+    M[source] = math.inf
+    
+    Qu = [source]
+    Visited = list()
+    
+    while Qu:
+        u = Qu.pop(0)
+        Visited.append(u)
+        for v in Neighb_N[u]:
+            if Graph_G[u][v] > Res_R[u][v]:
+                if P[v] == -1:
+                    P[v] = u
+                    M[v] = min(M[u], Graph_G[u][v] - Res_R[u][v])
+                    if v == dest:
+                        return M[dest], P, Visited
+                    Qu.append(v)
+    return 0, P ,Visited
 
 def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
 
-	max_flow = 0
-	Res_R = [[0 for i in Graph_G] for i in Graph_G] #residual flow
-	
-	trace = list()
+    max_flow = 0
+    Res_R = [[0 for i in Graph_G] for i in Graph_G] #residual flow
+    
+    trace = list()
 
-	while True:
-		path_flow, P, visited = aug_path_search(Graph_G, Neighb_N, source, dest, Res_R)
+    while True:
+        path_flow, P, visited = aug_path_search(Graph_G, Neighb_N, source, dest, Res_R)
 
-		if path_flow == 0:
-			break
-			
-		trace.append(visited) #able to trace search path
+        if path_flow == 0:
+            break
+            
+        trace.append(visited) #able to trace search path
 
-		max_flow += path_flow
-		
-		vj = dest
-		while vj != source:
-			vi = P[vj]
-			Res_R[vi][vj] = Res_R[vi][vj] + path_flow
-			Res_R[vj][vi] = Res_R[vj][vi] - path_flow
-			vj = vi
+        max_flow += path_flow
+        
+        vj = dest
+        while vj != source:
+            vi = P[vj]
+            Res_R[vi][vj] = Res_R[vi][vj] + path_flow
+            Res_R[vj][vi] = Res_R[vj][vi] - path_flow
+            vj = vi
 
-	return max_flow, trace
+    return max_flow, trace
 
 
 #######PUSH RELABEL
@@ -124,160 +124,160 @@ def relabel_to_front(C, source, sink):
  
 #######DINIC'S
 class Graph:
-	__V = None
-	__levels = None
-	__visited = None
-	__G = None
+    __V = None
+    __levels = None
+    __visited = None
+    __G = None
 
-	def __init__(self, V):
-		self.__V = V
-		self.__levels = []
-		self.__visited =[]
+    def __init__(self, V):
+        self.__V = V
+        self.__levels = []
+        self.__visited =[]
 
-		for v in range(self.__V):
-				self.__levels.append(-1)
+        for v in range(self.__V):
+                self.__levels.append(-1)
 
-		for v in range(self.__V):
-				self.__visited.append(0)
+        for v in range(self.__V):
+                self.__visited.append(0)
 
-		# self.__G = [[0, 10, 10 ,0,0, 0],
-		# 						[0, 0,2,4,8, 0],
-		# 						[0, 0,0,0,9, 0],
-		# 						[0, 0,0,0,0, 10],
-		# 						[0, 0,0,6,0, 10],
-		# 						[0, 0,0,0,0, 0]]
+        # self.__G = [[0, 10, 10 ,0,0, 0],
+        #                       [0, 0,2,4,8, 0],
+        #                       [0, 0,0,0,9, 0],
+        #                       [0, 0,0,0,0, 10],
+        #                       [0, 0,0,6,0, 10],
+        #                       [0, 0,0,0,0, 0]]
 
-		self.__G = GenerateNetwork(V)
+        self.__G = GenerateNetwork(V)
 
 
-	def get_graph(self, copy=False):
-		#Winchester
-		#returns copy of Graph 
-		# ret_val = []
-		# for i in self.__G:
-		# 	row = []
-		# 	for j in i:
-		# 		row.append[j] 
-		# 	ret_val.append(row.copy()) 
-		return self.__G
+    def get_graph(self, copy=False):
+        #Winchester
+        #returns copy of Graph 
+        # ret_val = []
+        # for i in self.__G:
+        #   row = []
+        #   for j in i:
+        #       row.append[j] 
+        #   ret_val.append(row.copy()) 
+        return self.__G
 
-	def showGraph(self):
-		for v in range(self.__V):
-			print(v, ":", self.__G[v])
+    def showGraph(self):
+        for v in range(self.__V):
+            print(v, ":", self.__G[v])
 
-	def BFS(self, s):
-		for v in range(self.__V):
-			self.__levels[v] = -1
-		self.__levels[s] = 0
+    def BFS(self, s):
+        for v in range(self.__V):
+            self.__levels[v] = -1
+        self.__levels[s] = 0
 
-		q = []
-		q.append(s)
+        q = []
+        q.append(s)
 
-		while len(q) != 0:
-			u = q.pop()
+        while len(q) != 0:
+            u = q.pop()
 
-			for v in range(self.__V) :
-				if (self.__levels[v] < 0) and (self.__G[u][v] > 0): 
-					self.__levels[v] = self.__levels[u] + 1
-					q.append(v)
+            for v in range(self.__V) :
+                if (self.__levels[v] < 0) and (self.__G[u][v] > 0): 
+                    self.__levels[v] = self.__levels[u] + 1
+                    q.append(v)
 
-	def DFS(self, u,  t, flow):
+    def DFS(self, u,  t, flow):
 
-		if u == t:
-			return flow
+        if u == t:
+            return flow
 
-		while self.__visited[u] < self.__V:
-			v = self.__visited[u]
-			self.__visited[u] = v + 1
+        while self.__visited[u] < self.__V:
+            v = self.__visited[u]
+            self.__visited[u] = v + 1
 
-			if (self.__levels[u] < self.__levels[v] ) and (self.__G[u][v] > 0) :
-				currFlow = min(flow, self.__G[u][v])
-				tempFlow = self.DFS(v, t, currFlow)
+            if (self.__levels[u] < self.__levels[v] ) and (self.__G[u][v] > 0) :
+                currFlow = min(flow, self.__G[u][v])
+                tempFlow = self.DFS(v, t, currFlow)
 
-				if tempFlow > 0:
-					self.__G[u][v] = self.__G[u][v] - tempFlow
-					self.__G[v][u] = self.__G[v][u] + tempFlow
-					return tempFlow
+                if tempFlow > 0:
+                    self.__G[u][v] = self.__G[u][v] - tempFlow
+                    self.__G[v][u] = self.__G[v][u] + tempFlow
+                    return tempFlow
 
-		return 0 
+        return 0 
 
-	def DinicMaxFlow(self, s, t):
-		total  = 0
+    def DinicMaxFlow(self, s, t):
+        total  = 0
 
-		while True:
-			self.BFS(s)
-			if self.__levels[t] < 0:
-				return total
-			# print("Levels:", self.__levels)
+        while True:
+            self.BFS(s)
+            if self.__levels[t] < 0:
+                return total
+            # print("Levels:", self.__levels)
 
-			for v in range(self.__V):
-				self.__visited[v] = 0
-			
-			flow = self.DFS(s, t, float("inf"))
-			# self.showGraph()
-			while (flow > 0):
-				total = total + flow
-				# print(total)
-				flow = self.DFS(s, t, float("inf"))
-				# self.showGraph()
+            for v in range(self.__V):
+                self.__visited[v] = 0
+            
+            flow = self.DFS(s, t, float("inf"))
+            # self.showGraph()
+            while (flow > 0):
+                total = total + flow
+                # print(total)
+                flow = self.DFS(s, t, float("inf"))
+                # self.showGraph()
 
-		return total
+        return total
 
 #######MAIN
 def main():
 
-	sample_min = 100
-	sample_max = 500
-	step = 5
-	
-	sample_max += 1 #to allow for the exclusion of the range function 
-	
-	x = [i for i in range(sample_min, sample_max, step)]
-	e_k_algo = []
-	dinics_algo = []
-	p_r_algo = []
-	
-	for node_count in x:
-		
-		source_s = 0
-		dest_d = node_count 
+    sample_min = 100
+    sample_max = 500
+    step = 5
+    
+    sample_max += 1 #to allow for the exclusion of the range function 
+    
+    x = [i for i in range(sample_min, sample_max, step)]
+    e_k_algo = []
+    dinics_algo = []
+    p_r_algo = []
+    
+    for node_count in x:
+        
+        source_s = 0
+        dest_d = node_count 
 
-		G = Graph(node_count)
-		Network = G.get_graph()
-		Neighbors_Network = GenerateNeighbourMatrix(Network)
-		
-		#Edmonds-Karp
-		time_taken = time.time()
-		Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
-		e_k_algo.append(time.time() - time_taken)		
-		
-		#Push-Relabel
-		time_taken = time.time()
-		relabel_to_front(Network, source_s, dest_d)
-		p_r_algo.append(time.time() - time_taken)
-		
-		
-		#Dinic's 
-		time_taken = time.time()
-		G.DinicMaxFlow(source_s, dest_d - 1)
-		dinics_algo.append(time.time() - time_taken)
+        G = Graph(node_count)
+        Network = G.get_graph()
+        Neighbors_Network = GenerateNeighbourMatrix(Network)
+        
+        #Edmonds-Karp
+        time_taken = time.time()
+        Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+        e_k_algo.append(time.time() - time_taken)       
+        
+        #Push-Relabel
+        time_taken = time.time()
+        relabel_to_front(Network, source_s, dest_d)
+        p_r_algo.append(time.time() - time_taken)
+        
+        
+        #Dinic's 
+        time_taken = time.time()
+        G.DinicMaxFlow(source_s, dest_d - 1)
+        dinics_algo.append(time.time() - time_taken)
 
-	fig = plt.figure()
-	algorithms = fig.add_subplot(111)
-	algorithms.set_title('Algorithms Comparision (Adjacency Matrices) \nMatrix Orders: ' + str(sample_min)+ " to " + str(sample_max - 1) + "\nSampling interval: " + str(step))
-	algorithms.set_xlabel('matrix size (nXn)')
-	algorithms.set_ylabel('time (seconds) ')
-	
-	algorithms.plot(x, p_r_algo,'o-' , color='yellow', label='Push-relabel algorithm O(V\N{SUPERSCRIPT TWO}E)')
-	algorithms.plot(x, e_k_algo,'o-' , color='blue', label='Edmonds-karp algorithm O(VE\N{SUPERSCRIPT TWO})')
-	algorithms.plot(x, dinics_algo, 'o-', color='red', label='Dinic\'s algorithm O(V\N{SUPERSCRIPT TWO}E)')
-	
-	algorithms.grid(linestyle='-')
-	legend = algorithms.legend()
-	
-	plt.show()
+    fig = plt.figure()
+    algorithms = fig.add_subplot(111)
+    algorithms.set_title('Algorithms Comparision (Adjacency Matrices) \nMatrix Orders: ' + str(sample_min)+ " to " + str(sample_max - 1) + "\nSampling interval: " + str(step))
+    algorithms.set_xlabel('matrix size (nXn)')
+    algorithms.set_ylabel('time (seconds) ')
+    
+    algorithms.plot(x, p_r_algo,'o-' , color='yellow', label='Push-relabel algorithm O(V\N{SUPERSCRIPT TWO}E)')
+    algorithms.plot(x, e_k_algo,'o-' , color='blue', label='Edmonds-karp algorithm O(VE\N{SUPERSCRIPT TWO})')
+    algorithms.plot(x, dinics_algo, 'o-', color='red', label='Dinic\'s algorithm O(V\N{SUPERSCRIPT TWO}E)')
+    
+    algorithms.grid(linestyle='-')
+    legend = algorithms.legend()
+    
+    plt.show()
 
 
 
 if __name__ == '__main__':
-	main()
+    main()
