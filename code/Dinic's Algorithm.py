@@ -1,6 +1,7 @@
 import random
 import time as t
 import matplotlib.pyplot as ba
+from GraphGeneration import * 
 
 class Graph:
 	__V = None
@@ -26,14 +27,12 @@ class Graph:
 		# 						[0, 0,0,6,0, 10],
 		# 						[0, 0,0,0,0, 0]]
 
+		self.__G = GenerateNetwork(V)
 
-		self.__G = [[0 for i in range(V)] for j in range(V)]
-		for i in range(V):
-			for j in range(V):
-				C = random.randint(-20, 15)
-				if C > 0 and j != i:
-					self.__G[i][j] = C
 
+	def get_graph(self):
+		#Winchester 
+		return self.__G
 
 	def showGraph(self):
 		for v in range(self.__V):
@@ -121,7 +120,7 @@ class Graph:
 def main():
 	min_sample = 6
 	max_sample = 200
-	x, y = [i for i in range(min_sample, max_sample + 1)], []
+	x, y = [i for i in range(min_sample, max_sample + 1, 5)], []
 	for node_count in x:
 		source_s = 0
 		dest_d = node_count 
