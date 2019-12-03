@@ -18,7 +18,7 @@ def GenerateNetwork(lengthG):
     for i in range(lengthG):
         for j in range(len(G[i])):
             capacity = random.randint(-20, 15)
-            if capacity > 0 and j != i:
+            if capacity > 0 and j != i and j != 0:
                 if G[j][i] == 0:
                     G[i][j] = capacity
     return G
