@@ -151,13 +151,6 @@ class Graph:
 
     def get_graph(self, copy=False):
         #Winchester
-        #returns copy of Graph 
-        # ret_val = []
-        # for i in self.__G:
-        #   row = []
-        #   for j in i:
-        #       row.append[j] 
-        #   ret_val.append(row.copy()) 
         return self.__G
 
     def showGraph(self):
