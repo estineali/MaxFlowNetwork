@@ -4,9 +4,8 @@ import random
 import time, math
 
 #######EDMONDS KARP
-def aug_path_search(Graph_G, Neighb_N, source, dest, Res_R):
+def aug_path_search(Graph_G, source, dest, Res_R):
     #Graph_G is the adjacency matrix containing the capacity
-    #Neighb_N is the adjacency List containing neighbours
     #Res_R is the Residual Flow 
     P = [-1 for x in Graph_G]
     P[source] = -2
@@ -15,36 +14,36 @@ def aug_path_search(Graph_G, Neighb_N, source, dest, Res_R):
     M[source] = math.inf
     
     Qu = [source]
-    Visited = list()
     
+    Neighb_N = GenerateNeighbourMatrix(Graph_G)
+
     while Qu:
         u = Qu.pop(0)
-        Visited.append(u)
         for v in Neighb_N[u]:
             if Graph_G[u][v] > Res_R[u][v]:
                 if P[v] == -1:
                     P[v] = u
                     M[v] = min(M[u], Graph_G[u][v] - Res_R[u][v])
+
                     if v == dest:
-                        return M[dest], P, Visited
+                        return M[dest], P
                     Qu.append(v)
-    return 0, P ,Visited
+    return 0, P
 
-def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
+def Edmonds_Karp(Graph_G, source, dest):
 
+    if dest == len(Graph_G):
+        dest -= 1
+        
     max_flow = 0
     Res_R = [[0 for i in Graph_G] for i in Graph_G] #residual flow
-    
-    trace = list()
 
     while True:
-        path_flow, P, visited = aug_path_search(Graph_G, Neighb_N, source, dest, Res_R)
+        path_flow, P = aug_path_search(Graph_G, source, dest, Res_R)
 
-        if path_flow == 0:
+        if not path_flow:
             break
             
-        trace.append(visited) #able to trace search path
-
         max_flow += path_flow
         
         vj = dest
@@ -54,7 +53,7 @@ def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
             Res_R[vj][vi] = Res_R[vj][vi] - path_flow
             vj = vi
 
-    return max_flow, trace
+    return max_flow
 
 
 #######PUSH RELABEL
@@ -226,45 +225,44 @@ class Graph:
 #######MAIN
 def main():
 
-    sample_min = 100
+    sample_min = 10
     sample_max = 500
-    step = 5
+    step = 25
     
-    sample_max += 1 #to allow for the exclusion of the range function 
+    x = [i for i in range(sample_min, sample_max + 1, step)]
     
-    x = [i for i in range(sample_min, sample_max, step)]
     e_k_algo = []
     dinics_algo = []
     p_r_algo = []
     
     for node_count in x:
+        print("Processing", node_count, "x", node_count, "matrix now.")
         
         source_s = 0
-        dest_d = node_count 
+        dest_d = node_count - 1
 
         G = Graph(node_count)
         Network = G.get_graph()
-        Neighbors_Network = GenerateNeighbourMatrix(Network)
         
         #Edmonds-Karp
         time_taken = time.time()
-        Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+        Edmonds_Karp(Network, source_s, dest_d)
         e_k_algo.append(time.time() - time_taken)       
         
-        #Push-Relabel
+        # #Push-Relabel
         time_taken = time.time()
         relabel_to_front(Network, source_s, dest_d)
         p_r_algo.append(time.time() - time_taken)
         
-        
-        #Dinic's 
+        # Dinic's 
         time_taken = time.time()
         G.DinicMaxFlow(source_s, dest_d - 1)
         dinics_algo.append(time.time() - time_taken)
 
     fig = plt.figure()
     algorithms = fig.add_subplot(111)
-    algorithms.set_title('Algorithms Comparision (Adjacency Matrices) \nMatrix Orders: ' + str(sample_min)+ " to " + str(sample_max - 1) + "\nSampling interval: " + str(step))
+
+    algorithms.set_title('Algorithms Comparision (Adjacency Matrices) \nMatrix Orders: ' + str(sample_min)+ " to " + str(sample_max) + "\nSampling interval: " + str(step))
     algorithms.set_xlabel('matrix size (nXn)')
     algorithms.set_ylabel('time (seconds) ')
     
