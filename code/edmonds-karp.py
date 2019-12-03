@@ -29,11 +29,13 @@ def aug_path_search(Graph_G, Neighb_N, source, dest, Res_R):
                     Qu.append(v)
     return 0, P ,Visited
 
-def Edmonds_Karp(Graph_G, Neighb_N, source, dest):
+def Edmonds_Karp(Graph_G, source, dest):
 
     max_flow = 0
     Res_R = [[0 for i in Graph_G] for i in Graph_G] #residual flow
     
+    Neighb_N = GenerateNeighbourMatrix(Graph_G)
+
     trace = list()
 
     while True:
@@ -65,11 +67,10 @@ def main():
 		dest_d = node_count 
 
 		Network = GenerateNetwork(node_count)
-		Neighbors_Network = GenerateNeighbourMatrix(Network)
 
 		time_taken = time.time()
 		
-		max_flow, trace  = Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+		max_flow, trace  = Edmonds_Karp(Network, source_s, dest_d)
 		
 		time_taken = time.time() - time_taken
 		
