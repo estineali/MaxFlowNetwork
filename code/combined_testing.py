@@ -150,8 +150,15 @@ class Graph:
 		self.__G = GenerateNetwork(V)
 
 
-	def get_graph(self):
-		#Winchester 
+	def get_graph(self, copy=False):
+		#Winchester
+		#returns copy of Graph 
+		# ret_val = []
+		# for i in self.__G:
+		# 	row = []
+		# 	for j in i:
+		# 		row.append[j] 
+		# 	ret_val.append(row.copy()) 
 		return self.__G
 
 	def showGraph(self):
@@ -219,9 +226,9 @@ class Graph:
 #######MAIN
 def main():
 
-	sample_min = 1
-	sample_max = 10
-	step = 1
+	sample_min = 100
+	sample_max = 500
+	step = 5
 	
 	sample_max += 1 #to allow for the exclusion of the range function 
 	
@@ -239,15 +246,16 @@ def main():
 		Network = G.get_graph()
 		Neighbors_Network = GenerateNeighbourMatrix(Network)
 		
+		#Edmonds-Karp
+		time_taken = time.time()
+		Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
+		e_k_algo.append(time.time() - time_taken)		
+		
 		#Push-Relabel
 		time_taken = time.time()
 		relabel_to_front(Network, source_s, dest_d)
 		p_r_algo.append(time.time() - time_taken)
 		
-		#Edmonds-Karp
-		time_taken = time.time()
-		Edmonds_Karp(Network, Neighbors_Network, source_s, dest_d)
-		e_k_algo.append(time.time() - time_taken)		
 		
 		#Dinic's 
 		time_taken = time.time()
@@ -256,7 +264,7 @@ def main():
 
 	fig = plt.figure()
 	algorithms = fig.add_subplot(111)
-	algorithms.set_title('Algorithms Comparision. \n')
+	algorithms.set_title('Algorithms Comparision (Adjacency Matrices) \nMatrix Orders: ' + str(sample_min)+ " to " + str(sample_max - 1) + "\nSampling interval: " + str(step))
 	algorithms.set_xlabel('matrix size (nXn)')
 	algorithms.set_ylabel('time (seconds) ')
 	
