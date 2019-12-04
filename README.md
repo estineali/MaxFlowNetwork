@@ -3,7 +3,6 @@
 ## Final Project : Maximum Flow in a Flow Network
 
 The Damnp Biscotti
-	
 - Use the [code](/code) folder to keep all source code files (.c, .h, .cpp, .py, etc.)
 - Use the [resources](/resources) folder for any and all resources (pdf, png, jpeg, etc.) that you wish to use inside the TeX file.
 - Please dont push the compiled pdf file(s) of TeX files.
@@ -16,9 +15,9 @@ The Damnp Biscotti
 
 ## Algorithms:
 	1. Dinic's Algorithm. 
-		Pending
+		Not Implementing
 	2. Ford-Fulkerson Algorithm
-		Pending
+		Commited
 	3. Edmonds-Karp Algorithm
 		Commited
 	4. Push-Relabel Algorithm
