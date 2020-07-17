@@ -16,10 +16,10 @@ The Damnp Biscotti
 
 ## Algorithms:
 	1. Dinic's Algorithm. 
-		Not Implementing
+		Committed 
 	2. Ford-Fulkerson Algorithm
-		Commited
+		Committed 
 	3. Edmonds-Karp Algorithm
-		Commited
+		Committed 
 	4. Push-Relabel Algorithm
-		Commited
+		Committed 
